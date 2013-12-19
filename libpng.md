@@ -1,13 +1,15 @@
-# libpng
-libpng ffi binding
+---
+project: libpng
+tagline: libpng ffi binding
+---
 
-_*NOTE: work-in-progress (version 1.0 coming soon)*_
+## NOTE: work-in-progress (version 1.0 coming soon)
 
-v1.0 | [binding](http://code.google.com/p/lua-files/source/browse/libpng.lua) | [header](http://code.google.com/p/lua-files/source/browse/libpng_h.lua) | [demo](http://code.google.com/p/lua-files/source/browse/libpng_demo.lua) | libpng 1.5.12 | LuaJIT 2
+v1.0 | libpng 1.5.12 | LuaJIT 2
 
 ## `local libpng = require'libpng'`
 
-A ffi binding of the ubiquitous [libpng](http://www.libpng.org/pub/png/libpng.html).
+A ffi binding of the ubiquitous [libpng].
 
 ## `libpng.load(t) -> image`
 
@@ -38,16 +40,18 @@ Read and decode a PNG image.
         * also called once for non-interlaced images.
         * also called on error, as `render_scan(nil, true, scan_number, error)`, where `scan_number` is the scan number that was supposed to be rendering next and `error` the error message.
 
-For more info on decoding process and options, read the [libpng documentation](http://www.libpng.org/pub/png/libpng-1.2.5-manual.html) (have coffee/ibuprofen ready).
+For more info on decoding process and options, read the [libpng documentation] (have coffee/ibuprofen ready).
 
 The returned image object is a table with the fields:
     * `pixel`, `orientation`, `stride`, `data`, `size`, `w`, `h`: image format and dimensions and pixel data.
     * `file.pixel`, `file.paletted`, `file.bit_depth`, `file.interlaced`, `file.w`, `file.h`: format of the original image before conversion.
 
 ## Help needed
+
   * encoding API
   * jit is turned off because we can't call error() from a ffi callback called from C; and yet we must not return control to C on errors. is there a way around it?
   * the read callback cannot yield since it is called from C code. this means coroutine-based socket schedulers are out, so much for progressive loading. is there a way around it?
 
-----
-See also: [imagefile].
+
+[libpng]:                 http://www.libpng.org/pub/png/libpng.html
+[libpng documentation]:   http://www.libpng.org/pub/png/libpng-1.2.5-manual.html
