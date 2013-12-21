@@ -1,1 +1,1 @@
-gcc *.c -O3 -s -o ../../bin/libpng.dll -shared -I../zlib -L../../bin -lz
+gcc *.c -O3 -s -o ../../bin/png.dll -shared -static-libgcc -I../zlib -L../../bin -lz
