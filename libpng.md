@@ -9,7 +9,7 @@ v1.0 | libpng 1.5.12 | LuaJIT 2
 
 ## `local libpng = require'libpng'`
 
-A ffi binding of the ubiquitous [libpng].
+A ffi binding of the ubiquitous [libpng][libpng lib].
 
 ## `libpng.load(t) -> image`
 
@@ -40,7 +40,7 @@ Read and decode a PNG image.
         * also called once for non-interlaced images.
         * also called on error, as `render_scan(nil, true, scan_number, error)`, where `scan_number` is the scan number that was supposed to be rendering next and `error` the error message.
 
-For more info on decoding process and options, read the [libpng documentation] (have coffee/ibuprofen ready).
+For more info on decoding process and options, read the [libpng doc] (have coffee/ibuprofen ready).
 
 The returned image object is a table with the fields:
     * `pixel`, `orientation`, `stride`, `data`, `size`, `w`, `h`: image format and dimensions and pixel data.
@@ -53,5 +53,5 @@ The returned image object is a table with the fields:
   * the read callback cannot yield since it is called from C code. this means coroutine-based socket schedulers are out, so much for progressive loading. is there a way around it?
 
 
-[libpng]:                 http://www.libpng.org/pub/png/libpng.html
-[libpng documentation]:   http://www.libpng.org/pub/png/libpng-1.2.5-manual.html
+[libpng lib]:  http://www.libpng.org/pub/png/libpng.html
+[libpng doc]:  http://www.libpng.org/pub/png/libpng-1.2.5-manual.html
