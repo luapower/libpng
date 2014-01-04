@@ -1,6 +1,7 @@
 ---
-project: libpng
-tagline: libpng ffi binding
+project:     libpng
+tagline:     libpng ffi binding
+category:    Raster Images
 ---
 
 ## NOTE: work-in-progress (version 1.0 coming soon)
