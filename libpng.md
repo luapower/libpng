@@ -6,8 +6,6 @@ category:    Raster Images
 
 ## NOTE: work-in-progress (version 1.0 coming soon)
 
-v1.0 | libpng 1.5.12 | LuaJIT 2
-
 ## `local libpng = require'libpng'`
 
 A ffi binding of the ubiquitous [libpng][libpng lib].
