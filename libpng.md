@@ -1,6 +1,6 @@
 ---
-project:     libpng
-tagline:     libpng ffi binding
+project: libpng
+tagline: PNG reader
 ---
 
 ## NOTE: work-in-progress (version 1.0 coming soon)
