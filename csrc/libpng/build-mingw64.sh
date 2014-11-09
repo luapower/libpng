@@ -1,1 +1,1 @@
-gcc -O2 -s -static-libgcc *.c -shared -o ../../bin/mingw64/png.dll -I../zlib -L../../bin/mingw64 -lz
+P=mingw64 L="-s -static-libgcc" D=png.dll A=png.a ./build.sh

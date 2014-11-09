@@ -1,1 +1,1 @@
-gcc -O2 -s -static-libgcc -fPIC *.c -shared -o ../../bin/linux64/libpng.so -I../zlib -L../../bin/linux64 -lz
+P=linux64 C=-fPIC L="-s -static-libgcc" D=libpng.so A=libpng.a ./build.sh
