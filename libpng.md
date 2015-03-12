@@ -3,7 +3,7 @@ project: libpng
 tagline: PNG reader
 ---
 
-## NOTE: work-in-progress (version 1.0 coming soon)
+<warn>Work-in-progress (version 1.0 coming soon)</warn>
 
 ## `local libpng = require'libpng'`
 
