@@ -202,7 +202,6 @@ function player:on_render(cr)
 			libpng.load(t)
 		end)
 		if not ok then
-			print(err)
 			t.render_scan(nil, true, 1, err)
 		end
 
