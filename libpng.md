@@ -9,7 +9,9 @@ tagline: PNG reader
 
 A ffi binding of the ubiquitous [libpng][libpng lib].
 
-## `libpng.load(t) -> image`
+## API
+
+### `libpng.load(t) -> image`
 
 Read and decode a PNG image.
 
