@@ -1,5 +1,4 @@
 ---
-project: libpng
 tagline: PNG reader
 ---
 
