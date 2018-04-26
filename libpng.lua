@@ -63,17 +63,6 @@ local function pad_stride(stride)
 	return bit.band(stride + 3, bit.bnot(3))
 end
 
---given a string or cdata/size pair, return a reader function that returns
---the entire data on the first call.
-local function one_shot_reader(buf, sz)
-	local done
-	return function()
-		if done then return end
-		done = true
-		return buf, sz
-	end
-end
-
 --create a top-down or bottom-up array of rows pointing to a bitmap buffer.
 local function rows_buffer(h, bottom_up, data, stride)
 	local rows = ffi.new('uint8_t*[?]', h)
@@ -126,48 +115,24 @@ local function load(t)
 		end)
 		C.png_set_error_fn(png_ptr, nil, error_cb, warning_cb)
 
-		--setup input source
-		if t.stream then
+		--wrap the stream reader into a buffered reader.
+		local buffered_read = buffered_reader(t.read)
 
-			C.png_init_io(png_ptr, t.stream)
-
-		elseif t.path then
-
-			local file = io.open(t.path, 'rb')
-			finally(function()
-				C.png_init_io(png_ptr, nil)
-				file:close()
-			end)
-			C.png_init_io(png_ptr, file)
-
-		elseif t.string or t.cdata or t.read then
-
-			--wrap cdata and string into a one-shot stream reader.
-			local read = t.read
-				or t.string and one_shot_reader(t.string)
-				or t.cdata  and one_shot_reader(t.cdata, t.size)
-
-			--wrap the stream reader into a buffered reader.
-			local buffered_read = buffered_reader(read)
-
-			--wrap the buffered reader so that errors go through png_error().
-			local function png_read(png_ptr, dbuf, dsz)
-				local ok, err = pcall(buffered_read, dbuf, tonumber(dsz))
-				if not ok then C.png_error(png_ptr, err) end
-			end
-
-			--wrap the png reader into a RAII callback object.
-			local read_cb = ffi.cast('png_rw_ptr', png_read)
-			finally(function()
-				C.png_set_read_fn(png_ptr, nil, nil)
-				read_cb:free()
-			end)
-
-			--put the onion into the oven.
-			C.png_set_read_fn(png_ptr, nil, read_cb)
-		else
-			error'source missing'
+		--wrap the buffered reader so that errors go through png_error().
+		local function png_read(png_ptr, dbuf, dsz)
+			local ok, err = pcall(buffered_read, dbuf, tonumber(dsz))
+			if not ok then C.png_error(png_ptr, err) end
 		end
+
+		--wrap the png reader into a RAII callback object.
+		local read_cb = ffi.cast('png_rw_ptr', png_read)
+		finally(function()
+			C.png_set_read_fn(png_ptr, nil, nil)
+			read_cb:free()
+		end)
+
+		--put the onion into the oven.
+		C.png_set_read_fn(png_ptr, nil, read_cb)
 
 		local function image_info(t)
 			t = t or {}

@@ -10,15 +10,11 @@ A ffi binding of the ubiquitous [libpng][libpng lib].
 
 ## API
 
-### `libpng.load(t) -> image`
+### `libpng.load(opt) -> image`
 
-Read and decode a PNG image. `t` is a table specifying:
+Read and decode a PNG image. `opt` is a table specifying:
 
 * where to read the data from (one of the following):
-	* `path`: read data from a file given its filename
-	* `string`: read data from a string
-	* `cdata`, `size`: read data from a buffer of specified size
-	* `stream`: read data from an opened `FILE *` stream
 	* `read`: read data from a reader function of form:
 		* `read(needed_size) -> cdata, size | string | nil`
 			* `needed_size` is informative, the function can return however

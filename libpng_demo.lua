@@ -27,6 +27,17 @@ local passes_filter = glue.index(passes_filter_values)
 local pass_only = 7
 local sparkle = false
 
+--given a string or cdata/size pair, return a reader function that returns
+--the entire data on the first call.
+local function one_shot_reader(buf, sz)
+	local done
+	return function()
+		if done then return end
+		done = true
+		return buf, sz
+	end
+end
+
 function player:on_render(cr)
 
 	self:checkerboard()
