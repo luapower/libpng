@@ -1,5 +1,5 @@
 
---libpng binding for libpng 1.5.6+
+--libpng binding for libpng 1.6.37+
 --Written by Cosmin Apreutesei. Public Domain.
 
 if not ... then require'libpng_demo'; return end
@@ -11,7 +11,7 @@ local jit = require'jit' --off
 require'libpng_h'
 local C = ffi.load'png'
 
-local PNG_LIBPNG_VER_STRING = '1.5.10'
+local PNG_LIBPNG_VER_STRING = '1.6.37'
 
 local channels = {
 	[C.PNG_COLOR_TYPE_GRAY] = 'g',         --bpc 1,2,4,8,16

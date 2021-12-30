@@ -8,7 +8,7 @@ A ffi binding of the ubiquitous [libpng][libpng lib].
 
 ## API
 
-### `libpng.load(t) -> image`
+### `libpng.load(path | read | t) -> image`
 
 Read and decode a PNG image. `t` is a table specifying:
 
@@ -25,7 +25,7 @@ Read and decode a PNG image. `t` is a table specifying:
 	* `accept`: if present, it is a table specifying conversion options.
 	  libpng implements many of the pixel conversions itself, while other
 	  conversions are supported through [bmpconv bmpconv.convert_best()].
-	  If no `accept` option is given, the image is returned in a normalize
+	  If no `accept` option is given, the image is returned in a normalized
 	  8 bit per channel, top down, palette expanded, 'g', 'rgb', 'rgba' or
 	  'ga' format.
 	* `[pixel_format] = true` - specify one or more accepted pixel formats
@@ -61,15 +61,16 @@ The returned image object is a table with the fields:
 * `file.pixel`, `file.paletted`, `file.bit_depth`, `file.interlaced`,
   `file.w`, `file.h`: format of the original image before conversion.
 
+## Limitations
+
+  * jit is turned off because we can't call error() from a ffi callback called
+    from C; and yet we must not return control to C on errors.
+  * the read callback cannot yield since it is called from C code. This means
+    coroutine-based socket schedulers are out, so no progressive loading.
+
 ## Help needed
 
   * saving API
-  * jit is turned off because we can't call error() from a ffi callback called
-    from C; and yet we must not return control to C on errors.
-	 Is there a way around it?
-  * the read callback cannot yield since it is called from C code. This means
-    coroutine-based socket schedulers are out, so much for progressive loading.
-	 Is there a way around it?
 
 
 [libpng lib]:  http://www.libpng.org/pub/png/libpng.html
